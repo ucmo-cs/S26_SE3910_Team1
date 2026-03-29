@@ -9,9 +9,12 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
+		// A mismatched browser Origin on POST often surfaces as HTTP 403 Forbidden (CORS).
+		// allowCredentials must stay false when using "*" origin pattern.
 		registry.addMapping("/api/**")
-				.allowedOrigins("http://localhost:5173", "http://127.0.0.1:5173")
-				.allowedMethods("GET", "POST", "DELETE", "OPTIONS")
-				.allowedHeaders("*");
+				.allowedOriginPatterns("*")
+				.allowedMethods("GET", "POST", "DELETE", "OPTIONS", "HEAD", "PUT", "PATCH")
+				.allowedHeaders("*")
+				.maxAge(3600);
 	}
 }

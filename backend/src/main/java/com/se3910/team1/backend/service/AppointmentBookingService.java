@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.se3910.team1.backend.api.dto.BookAppointmentRequest;
+import com.se3910.team1.backend.event.AppointmentBookedEvent;
 import com.se3910.team1.backend.api.dto.BookAppointmentResponse;
 import com.se3910.team1.backend.domain.Appointment;
 import com.se3910.team1.backend.domain.AppointmentStatus;
@@ -50,14 +52,17 @@ public class AppointmentBookingService {
 	private final AppointmentRepository appointmentRepository;
 	private final BranchRepository branchRepository;
 	private final OfferedServiceRepository offeredServiceRepository;
+	private final ApplicationEventPublisher eventPublisher;
 
 	public AppointmentBookingService(
 			AppointmentRepository appointmentRepository,
 			BranchRepository branchRepository,
-			OfferedServiceRepository offeredServiceRepository) {
+			OfferedServiceRepository offeredServiceRepository,
+			ApplicationEventPublisher eventPublisher) {
 		this.appointmentRepository = appointmentRepository;
 		this.branchRepository = branchRepository;
 		this.offeredServiceRepository = offeredServiceRepository;
+		this.eventPublisher = eventPublisher;
 	}
 
 	public List<String> findAvailableSlots(Long branchId, Long serviceId, LocalDate date) {
@@ -118,6 +123,20 @@ public class AppointmentBookingService {
 		appointment.setStatus(AppointmentStatus.SCHEDULED);
 
 		Appointment saved = appointmentRepository.save(appointment);
+
+		String notes = saved.getNotes() != null ? saved.getNotes() : "";
+		eventPublisher.publishEvent(new AppointmentBookedEvent(
+				saved.getId(),
+				saved.getCustomerEmail(),
+				saved.getCustomerFirstName(),
+				saved.getCustomerLastName(),
+				saved.getCustomerPhone(),
+				branch.getName(),
+				branch.getAddress() != null ? branch.getAddress() : "",
+				service.getName(),
+				date.format(DISPLAY_DATE),
+				request.timeSlot(),
+				notes));
 
 		return new BookAppointmentResponse(
 				saved.getId(),
