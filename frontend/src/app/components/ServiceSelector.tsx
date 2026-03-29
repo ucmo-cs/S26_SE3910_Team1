@@ -2,7 +2,7 @@ import { CreditCard, Home, TrendingUp, Users, FileText, Banknote } from "lucide-
 import { Card } from "./ui/card";
 
 interface Service {
-  id: string;
+  id: number;
   name: string;
   description: string;
   duration: string;
@@ -11,8 +11,8 @@ interface Service {
 
 interface ServiceSelectorProps {
   services: Service[];
-  selectedService: string | null;
-  onSelect: (serviceId: string) => void;
+  selectedService: number | null;
+  onSelect: (serviceId: number) => void;
 }
 
 const iconMap: Record<string, any> = {

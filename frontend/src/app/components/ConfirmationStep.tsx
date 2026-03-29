@@ -1,5 +1,6 @@
 import { CheckCircle2, Calendar, Clock, MapPin, Briefcase, User, Mail, Phone } from "lucide-react";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 interface ConfirmationStepProps {
   branchName: string;
@@ -9,6 +10,11 @@ interface ConfirmationStepProps {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  appointmentId: number | null;
+  isCancelled: boolean;
+  cancelling: boolean;
+  cancelError: string | null;
+  onCancelAppointment: () => void;
 }
 
 export function ConfirmationStep({
@@ -19,6 +25,11 @@ export function ConfirmationStep({
   customerName,
   customerEmail,
   customerPhone,
+  appointmentId,
+  isCancelled,
+  cancelling,
+  cancelError,
+  onCancelAppointment,
 }: ConfirmationStepProps) {
   return (
     <div className="space-y-6">
@@ -27,10 +38,12 @@ export function ConfirmationStep({
           <CheckCircle2 className="size-8 text-green-600 dark:text-green-400" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Appointment Confirmed!
+          {isCancelled ? "Appointment Cancelled" : "Appointment Confirmed!"}
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          Your appointment has been successfully scheduled
+          {isCancelled
+            ? "Your appointment has been cancelled."
+            : "Your appointment has been successfully scheduled"}
         </p>
       </div>
 
@@ -106,12 +119,31 @@ export function ConfirmationStep({
         </div>
       </Card>
 
-      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-        <p className="text-sm text-gray-700 dark:text-gray-300">
-          <span className="font-semibold">Please note:</span> A confirmation email has been sent to {customerEmail}. 
-          You will receive a reminder 24 hours before your appointment.
-        </p>
-      </div>
+      {!isCancelled && (
+        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="font-semibold">Please note:</span> A confirmation email has been sent to{" "}
+            {customerEmail}. You will receive a reminder 24 hours before your appointment.
+          </p>
+        </div>
+      )}
+
+      {appointmentId != null && !isCancelled && (
+        <div className="flex flex-col items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            className="border-red-200 text-red-700 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40"
+            disabled={cancelling}
+            onClick={onCancelAppointment}
+          >
+            {cancelling ? "Cancelling…" : "Cancel appointment"}
+          </Button>
+          {cancelError && (
+            <p className="text-sm text-red-600 dark:text-red-400 text-center max-w-md">{cancelError}</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

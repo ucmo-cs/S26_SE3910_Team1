@@ -2,7 +2,7 @@ import { MapPin, Phone, Clock } from "lucide-react";
 import { Card } from "./ui/card";
 
 interface Branch {
-  id: string;
+  id: number;
   name: string;
   address: string;
   phone: string;
@@ -11,8 +11,8 @@ interface Branch {
 
 interface BranchSelectorProps {
   branches: Branch[];
-  selectedBranch: string | null;
-  onSelect: (branchId: string) => void;
+  selectedBranch: number | null;
+  onSelect: (branchId: number) => void;
 }
 
 export function BranchSelector({

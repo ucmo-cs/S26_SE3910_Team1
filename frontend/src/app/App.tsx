@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Building2, Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { StepIndicator } from "./components/StepIndicator";
@@ -7,107 +7,32 @@ import { ServiceSelector } from "./components/ServiceSelector";
 import { DateTimeSelector } from "./components/DateTimeSelector";
 import { CustomerInfoForm } from "./components/CustomerInfoForm";
 import { ConfirmationStep } from "./components/ConfirmationStep";
+import {
+  bookAppointment,
+  cancelAppointment,
+  fetchBranches,
+  fetchServices,
+  formatLocalDateIso,
+  type BookAppointmentResponse,
+  type BranchDto,
+  type ServiceDto,
+} from "@/api/bankingApi";
 
-const branches = [
-  {
-    id: "downtown",
-    name: "Downtown Branch",
-    address: "123 Main Street, Suite 100, City, ST 12345",
-    phone: "(555) 123-4567",
-    hours: "Mon-Fri: 9:00 AM - 5:00 PM",
-  },
-  {
-    id: "westside",
-    name: "Westside Branch",
-    address: "456 Oak Avenue, City, ST 12346",
-    phone: "(555) 234-5678",
-    hours: "Mon-Fri: 9:00 AM - 5:00 PM",
-  },
-  {
-    id: "northgate",
-    name: "Northgate Branch",
-    address: "789 Pine Road, City, ST 12347",
-    phone: "(555) 345-6789",
-    hours: "Mon-Fri: 8:30 AM - 5:30 PM",
-  },
-  {
-    id: "southpark",
-    name: "Southpark Branch",
-    address: "321 Elm Boulevard, City, ST 12348",
-    phone: "(555) 456-7890",
-    hours: "Mon-Fri: 9:00 AM - 5:00 PM",
-  },
-];
-
-const services = [
-  {
-    id: "account",
-    name: "Open Account",
-    description: "Open a new checking or savings account",
-    duration: "30 min",
-    icon: "CreditCard",
-  },
-  {
-    id: "loan",
-    name: "Loan Consultation",
-    description: "Personal, auto, or home loan discussions",
-    duration: "45 min",
-    icon: "Home",
-  },
-  {
-    id: "investment",
-    name: "Investment Advice",
-    description: "Meet with a financial advisor",
-    duration: "60 min",
-    icon: "TrendingUp",
-  },
-  {
-    id: "business",
-    name: "Business Banking",
-    description: "Business accounts and services",
-    duration: "45 min",
-    icon: "Users",
-  },
-  {
-    id: "mortgage",
-    name: "Mortgage Services",
-    description: "Mortgage applications and refinancing",
-    duration: "60 min",
-    icon: "FileText",
-  },
-  {
-    id: "general",
-    name: "General Inquiry",
-    description: "General banking questions and support",
-    duration: "15 min",
-    icon: "Banknote",
-  },
-];
-
-const availableTimeSlots = [
-  "9:00 AM",
-  "9:30 AM",
-  "10:00 AM",
-  "10:30 AM",
-  "11:00 AM",
-  "11:30 AM",
-  "1:00 PM",
-  "1:30 PM",
-  "2:00 PM",
-  "2:30 PM",
-  "3:00 PM",
-  "3:30 PM",
-  "4:00 PM",
-  "4:30 PM",
-];
-
-const steps = ["Branch", "Service", "Date & Time", "Your Info", "Confirm"];
+const steps = ["Service", "Branch", "Date & Time", "Your Info", "Confirm"];
 
 export default function App() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  const [services, setServices] = useState<ServiceDto[]>([]);
+  const [branches, setBranches] = useState<BranchDto[]>([]);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+  const [branchesError, setBranchesError] = useState<string | null>(null);
+  const [loadingServices, setLoadingServices] = useState(true);
+  const [loadingBranches, setLoadingBranches] = useState(false);
+
+  const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [customerInfo, setCustomerInfo] = useState({
@@ -118,6 +43,13 @@ export default function App() {
     notes: "",
   });
 
+  const [lastBooking, setLastBooking] = useState<BookAppointmentResponse | null>(null);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [isCancelled, setIsCancelled] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+  const [cancelError, setCancelError] = useState<string | null>(null);
+
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -126,38 +58,149 @@ export default function App() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingServices(true);
+    setCatalogError(null);
+    fetchServices()
+      .then((data) => {
+        if (!cancelled) setServices(data);
+      })
+      .catch((e: unknown) => {
+        if (!cancelled) {
+          setCatalogError(e instanceof Error ? e.message : "Could not load services.");
+          setServices([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingServices(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedService == null) {
+      setBranches([]);
+      setBranchesError(null);
+      return;
+    }
+    let cancelled = false;
+    setLoadingBranches(true);
+    setBranchesError(null);
+    fetchBranches(selectedService)
+      .then((data) => {
+        if (!cancelled) setBranches(data);
+      })
+      .catch((e: unknown) => {
+        if (!cancelled) {
+          setBranchesError(e instanceof Error ? e.message : "Could not load branches.");
+          setBranches([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingBranches(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedService]);
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const handleSelectService = (id: number) => {
+    setSelectedService(id);
+    setSelectedBranch(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
+  };
+
+  const handleSelectBranch = (id: number) => {
+    setSelectedBranch(id);
+    setSelectedDate(null);
+    setSelectedTime(null);
+  };
+
+  const handleDateSelect = useCallback((date: Date) => {
+    setSelectedDate(date);
+    setSelectedTime(null);
+  }, []);
+
+  const handleTimeSelect = useCallback((time: string | null) => {
+    setSelectedTime(time);
+  }, []);
+
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return selectedBranch !== null;
-      case 2:
         return selectedService !== null;
+      case 2:
+        return selectedBranch !== null;
       case 3:
         return selectedDate !== null && selectedTime !== null;
       case 4:
         return (
-          customerInfo.firstName &&
-          customerInfo.lastName &&
-          customerInfo.email &&
-          customerInfo.phone
+          !!customerInfo.firstName &&
+          !!customerInfo.lastName &&
+          !!customerInfo.email &&
+          !!customerInfo.phone
         );
       default:
         return false;
     }
   };
 
-  const handleNext = () => {
+  const submitBooking = async () => {
+    if (
+      selectedBranch == null ||
+      selectedService == null ||
+      selectedDate == null ||
+      selectedTime == null
+    ) {
+      return;
+    }
+    setBookingError(null);
+    setBookingSubmitting(true);
+    try {
+      const res = await bookAppointment({
+        branchId: selectedBranch,
+        serviceId: selectedService,
+        date: formatLocalDateIso(selectedDate),
+        timeSlot: selectedTime,
+        firstName: customerInfo.firstName,
+        lastName: customerInfo.lastName,
+        email: customerInfo.email,
+        phone: customerInfo.phone,
+        notes: customerInfo.notes,
+      });
+      setLastBooking(res);
+      setIsCancelled(false);
+      setCancelError(null);
+      setCurrentStep(5);
+    } catch (e: unknown) {
+      setBookingError(e instanceof Error ? e.message : "Booking failed.");
+    } finally {
+      setBookingSubmitting(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (currentStep === 4 && canProceed()) {
+      await submitBooking();
+      return;
+    }
     if (canProceed() && currentStep < 5) {
+      setBookingError(null);
       setCurrentStep(currentStep + 1);
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
+      setBookingError(null);
       setCurrentStep(currentStep - 1);
     }
   };
@@ -175,28 +218,39 @@ export default function App() {
       phone: "",
       notes: "",
     });
+    setLastBooking(null);
+    setBookingError(null);
+    setIsCancelled(false);
+    setCancelError(null);
   };
 
-  const getBranchName = () => {
-    return branches.find((b) => b.id === selectedBranch)?.name || "";
+  const handleCancelAppointment = async () => {
+    if (lastBooking == null) return;
+    setCancelError(null);
+    setCancelling(true);
+    try {
+      await cancelAppointment(lastBooking.id);
+      setIsCancelled(true);
+    } catch (e: unknown) {
+      setCancelError(e instanceof Error ? e.message : "Could not cancel appointment.");
+    } finally {
+      setCancelling(false);
+    }
   };
 
-  const getServiceName = () => {
-    return services.find((s) => s.id === selectedService)?.name || "";
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+  const displayBranchName =
+    lastBooking?.branchName ??
+    branches.find((b) => b.id === selectedBranch)?.name ??
+    "";
+  const displayServiceName =
+    lastBooking?.serviceName ??
+    services.find((s) => s.id === selectedService)?.name ??
+    "";
+  const displayDate = lastBooking?.date ?? "";
+  const displayTime = lastBooking?.time ?? "";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      {/* Header */}
       <header className="bg-white dark:bg-gray-900 border-b border-green-200 dark:border-green-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -230,58 +284,96 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentStep < 5 && <StepIndicator steps={steps} currentStep={currentStep} />}
 
+        {catalogError && currentStep === 1 && (
+          <div
+            className="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200"
+            role="alert"
+          >
+            {catalogError} Make sure the Spring Boot API is running on port 8080 (use{" "}
+            <code className="rounded bg-red-100 px-1 dark:bg-red-900/60">npm run dev</code> so{" "}
+            <code className="rounded bg-red-100 px-1 dark:bg-red-900/60">/api</code> proxies to the
+            backend).
+          </div>
+        )}
+
         <div className="mt-8 mb-8">
           {currentStep === 1 && (
-            <BranchSelector
-              branches={branches}
-              selectedBranch={selectedBranch}
-              onSelect={setSelectedBranch}
-            />
+            <>
+              {loadingServices ? (
+                <p className="text-gray-600 dark:text-gray-400">Loading services…</p>
+              ) : (
+                <ServiceSelector
+                  services={services}
+                  selectedService={selectedService}
+                  onSelect={handleSelectService}
+                />
+              )}
+            </>
           )}
 
           {currentStep === 2 && (
-            <ServiceSelector
-              services={services}
-              selectedService={selectedService}
-              onSelect={setSelectedService}
-            />
+            <>
+              {selectedService == null ? (
+                <p className="text-gray-600 dark:text-gray-400">Please select a service first.</p>
+              ) : loadingBranches ? (
+                <p className="text-gray-600 dark:text-gray-400">Loading branches…</p>
+              ) : branchesError ? (
+                <p className="text-red-600 dark:text-red-400" role="alert">
+                  {branchesError}
+                </p>
+              ) : (
+                <BranchSelector
+                  branches={branches}
+                  selectedBranch={selectedBranch}
+                  onSelect={handleSelectBranch}
+                />
+              )}
+            </>
           )}
 
           {currentStep === 3 && (
             <DateTimeSelector
+              branchId={selectedBranch}
+              serviceId={selectedService}
               selectedDate={selectedDate}
               selectedTime={selectedTime}
-              onDateSelect={setSelectedDate}
-              onTimeSelect={setSelectedTime}
-              availableSlots={availableTimeSlots}
+              onDateSelect={handleDateSelect}
+              onTimeSelect={handleTimeSelect}
             />
           )}
 
           {currentStep === 4 && (
-            <CustomerInfoForm
-              customerInfo={customerInfo}
-              onChange={setCustomerInfo}
-            />
+            <>
+              <CustomerInfoForm customerInfo={customerInfo} onChange={setCustomerInfo} />
+              {bookingError && (
+                <p className="mt-4 text-sm text-red-600 dark:text-red-400" role="alert">
+                  {bookingError}
+                </p>
+              )}
+            </>
           )}
 
-          {currentStep === 5 && (
+          {currentStep === 5 && lastBooking && (
             <ConfirmationStep
-              branchName={getBranchName()}
-              serviceName={getServiceName()}
-              date={selectedDate ? formatDate(selectedDate) : ""}
-              time={selectedTime || ""}
+              branchName={displayBranchName}
+              serviceName={displayServiceName}
+              date={displayDate}
+              time={displayTime}
               customerName={`${customerInfo.firstName} ${customerInfo.lastName}`}
               customerEmail={customerInfo.email}
               customerPhone={customerInfo.phone}
+              appointmentId={lastBooking.id}
+              isCancelled={isCancelled}
+              cancelling={cancelling}
+              cancelError={cancelError}
+              onCancelAppointment={handleCancelAppointment}
             />
           )}
         </div>
 
-        {/* Navigation Buttons */}
         <div className="flex items-center justify-between pt-6 border-t border-green-200 dark:border-green-800">
           {currentStep === 5 ? (
             <div className="w-full flex justify-center">
@@ -305,12 +397,16 @@ export default function App() {
               </Button>
 
               <Button
-                onClick={handleNext}
-                disabled={!canProceed()}
+                onClick={() => void handleNext()}
+                disabled={!canProceed() || bookingSubmitting}
                 className="bg-green-600 hover:bg-green-700 text-white disabled:bg-gray-300 dark:disabled:bg-gray-700"
               >
-                {currentStep === 4 ? "Confirm Appointment" : "Next"}
-                <ArrowRight className="size-4 ml-2" />
+                {bookingSubmitting
+                  ? "Submitting…"
+                  : currentStep === 4
+                    ? "Confirm Appointment"
+                    : "Next"}
+                {!bookingSubmitting && <ArrowRight className="size-4 ml-2" />}
               </Button>
             </>
           )}
