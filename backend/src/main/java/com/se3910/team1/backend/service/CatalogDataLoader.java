@@ -1,6 +1,11 @@
 package com.se3910.team1.backend.service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -40,7 +45,8 @@ public class CatalogDataLoader implements CommandLineRunner {
 				service("general", "General Inquiry", "General banking questions and support", "15 min", "Banknote"));
 		offeredServiceRepository.saveAll(services);
 
-		List<OfferedService> allServices = offeredServiceRepository.findAll();
+		Map<String, OfferedService> servicesByCode = offeredServiceRepository.findAll().stream()
+				.collect(Collectors.toMap(OfferedService::getCode, Function.identity()));
 
 		Branch downtown = branch(
 				"downtown",
@@ -67,10 +73,27 @@ public class CatalogDataLoader implements CommandLineRunner {
 				"(555) 456-7890",
 				"Mon-Fri: 9:00 AM - 5:00 PM");
 
-		for (Branch b : List.of(downtown, westside, northgate, southpark)) {
-			b.getOfferedServices().addAll(allServices);
-			branchRepository.save(b);
+		assignServices(downtown, servicesByCode, "account", "general", "loan", "business");
+		assignServices(westside, servicesByCode, "account", "general", "mortgage");
+		assignServices(northgate, servicesByCode, "investment", "business", "mortgage", "general");
+		assignServices(southpark, servicesByCode, "loan", "mortgage", "investment", "account");
+
+		branchRepository.saveAll(List.of(downtown, westside, northgate, southpark));
+	}
+
+	private static void assignServices(
+			Branch branch, Map<String, OfferedService> servicesByCode, String... serviceCodes) {
+		Set<OfferedService> assigned = new LinkedHashSet<>();
+		for (String code : serviceCodes) {
+			OfferedService service = servicesByCode.get(code);
+			if (service == null) {
+				throw new IllegalStateException(
+						"Unknown service code '" + code + "' for branch '" + branch.getCode()
+								+ "'. Known codes: " + servicesByCode.keySet());
+			}
+			assigned.add(service);
 		}
+		branch.getOfferedServices().addAll(assigned);
 	}
 
 	private static OfferedService service(

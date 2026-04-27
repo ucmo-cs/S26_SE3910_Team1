@@ -1,0 +1,51 @@
+Starting a Gradle Daemon, 1 incompatible and 2 stopped Daemons could not be reused, use --status for details
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.13)
+
+2026-04-26T22:30:30.539-05:00  INFO 18604 --- [backend] [           main] c.s.team1.backend.BackendApplication     : Starting BackendApplication using Java 17.0.18 with PID 18604 (C:\Users\noahd\Documents\GitHub\S26_SE3910_Team1\backend\build\classes\java\main started by noahd in C:\Users\noahd\Documents\GitHub\S26_SE3910_Team1\backend)
+2026-04-26T22:30:30.541-05:00  INFO 18604 --- [backend] [           main] c.s.team1.backend.BackendApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-04-26T22:30:30.853-05:00  INFO 18604 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-26T22:30:30.881-05:00  INFO 18604 --- [backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 3 JPA repository interfaces.
+2026-04-26T22:30:31.111-05:00  INFO 18604 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-26T22:30:31.116-05:00  INFO 18604 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-26T22:30:31.117-05:00  INFO 18604 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.53]
+2026-04-26T22:30:31.146-05:00  INFO 18604 --- [backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-26T22:30:31.146-05:00  INFO 18604 --- [backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 582 ms
+2026-04-26T22:30:31.209-05:00  INFO 18604 --- [backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-26T22:30:31.229-05:00  INFO 18604 --- [backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.45.Final
+2026-04-26T22:30:31.243-05:00  INFO 18604 --- [backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-26T22:30:31.355-05:00  INFO 18604 --- [backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-26T22:30:31.371-05:00  INFO 18604 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-26T22:30:31.437-05:00  INFO 18604 --- [backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:bankdb user=SA
+2026-04-26T22:30:31.438-05:00  INFO 18604 --- [backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-26T22:30:31.463-05:00  INFO 18604 --- [backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-26T22:30:31.860-05:00  INFO 18604 --- [backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-26T22:30:31.895-05:00  INFO 18604 --- [backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-26T22:30:32.024-05:00  INFO 18604 --- [backend] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-26T22:30:32.214-05:00  WARN 18604 --- [backend] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-26T22:30:32.321-05:00  INFO 18604 --- [backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:bankdb'
+2026-04-26T22:30:32.367-05:00  INFO 18604 --- [backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-04-26T22:30:32.370-05:00  INFO 18604 --- [backend] [           main] c.s.team1.backend.BackendApplication     : Started BackendApplication in 2.033 seconds (process running for 2.19)
+2026-04-26T22:33:26.895-05:00  INFO 18604 --- [backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-26T22:33:26.895-05:00  INFO 18604 --- [backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-26T22:33:26.896-05:00  INFO 18604 --- [backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
