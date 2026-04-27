@@ -49,12 +49,12 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-green-600 hover:bg-green-700 text-white">
+        <Button className="bg-[#37644B] hover:bg-[#2C503C] text-white">
           <Plus className="size-4 mr-2" />
           New Appointment
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-900 border-green-200 dark:border-green-800">
+      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-900 border-[#37644B]/30 dark:border-green-800">
         <DialogHeader>
           <DialogTitle className="text-gray-900 dark:text-white">
             Add New Appointment
@@ -77,7 +77,7 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
                 }
                 placeholder="Meeting with..."
                 required
-                className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+                className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -93,7 +93,7 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
                     setFormData({ ...formData, date: e.target.value })
                   }
                   required
-                  className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+                  className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
                 />
               </div>
               <div className="grid gap-2">
@@ -108,7 +108,7 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
                     setFormData({ ...formData, time: e.target.value })
                   }
                   required
-                  className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+                  className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
                 />
               </div>
             </div>
@@ -124,7 +124,7 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
                 }
                 placeholder="Office, Zoom, etc."
                 required
-                className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+                className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
               />
             </div>
             <div className="grid gap-2">
@@ -139,14 +139,14 @@ export function AddAppointmentDialog({ onAdd }: AddAppointmentDialogProps) {
                 }
                 placeholder="Name or email"
                 required
-                className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+                className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
               />
             </div>
           </div>
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-[#37644B] hover:bg-[#2C503C] text-white"
             >
               Add Appointment
             </Button>

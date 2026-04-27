@@ -85,9 +85,9 @@ export function DateTimeSelector({
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="p-4 border-green-200 dark:border-green-800">
+        <Card className="p-4 border-[#37644B]/30 dark:border-green-800">
           <div className="flex items-center gap-2 mb-4">
-            <CalendarIcon className="size-5 text-green-600 dark:text-green-400" />
+            <CalendarIcon className="size-5 text-[#37644B] dark:text-green-400" />
             <h3 className="font-semibold text-gray-900 dark:text-white">
               Select Date
             </h3>
@@ -105,7 +105,7 @@ export function DateTimeSelector({
           />
         </Card>
 
-        <Card className="p-4 border-green-200 dark:border-green-800">
+        <Card className="p-4 border-[#37644B]/30 dark:border-green-800">
           <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
             Available Time Slots
           </h3>
@@ -138,8 +138,8 @@ export function DateTimeSelector({
                   onClick={() => onTimeSelect(slot)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                     selectedTime === slot
-                      ? "bg-green-600 dark:bg-green-500 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-green-100 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400"
+                      ? "bg-[#37644B] dark:bg-green-500 text-white"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-[#37644B]/15 dark:hover:bg-green-900/30 hover:text-[#37644B] dark:hover:text-green-400"
                   }`}
                 >
                   {slot}

@@ -1,0 +1,47 @@
+10:55:02 PM [vite] Internal server error: Failed to resolve import "@/assets/commerce-bank-icon.png" from "src/app/App.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/src/app/App.tsx:3:25
+  18 |  import { useCallback, useEffect, useState } from "react";
+  19 |  import { Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
+  20 |  import commerceIcon from "@/assets/commerce-bank-icon.png";
+     |                            ^
+  21 |  import { Button } from "./components/ui/button";
+  22 |  import { StepIndicator } from "./components/StepIndicator";
+      at TransformPluginContext._formatLog (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)
+11:28:23 PM [vite] (client) Pre-transform error: Failed to resolve import "@/assets/commerce-bank-icon.png" from "src/app/App.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/src/app/App.tsx:3:25
+  18 |  import { useCallback, useEffect, useState } from "react";
+  19 |  import { Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
+  20 |  import commerceIcon from "@/assets/commerce-bank-icon.png";
+     |                            ^
+  21 |  import { Button } from "./components/ui/button";
+  22 |  import { StepIndicator } from "./components/StepIndicator";
+11:28:23 PM [vite] Internal server error: Failed to resolve import "@/assets/commerce-bank-icon.png" from "src/app/App.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/src/app/App.tsx:3:25
+  18 |  import { useCallback, useEffect, useState } from "react";
+  19 |  import { Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
+  20 |  import commerceIcon from "@/assets/commerce-bank-icon.png";
+     |                            ^
+  21 |  import { Button } from "./components/ui/button";
+  22 |  import { StepIndicator } from "./components/StepIndicator";
+      at TransformPluginContext._formatLog (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42499:41)
+      at TransformPluginContext.error (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42496:16)
+      at normalizeUrl (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40475:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40594:37
+      at async Promise.all (index 5)
+      at async TransformPluginContext.transform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:40521:7)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:42294:18)
+      at async loadAndTransform (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:35735:27)
+      at async viteTransformMiddleware (file:///C:/Users/noahd/Documents/GitHub/S26_SE3910_Team1/frontend/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:37250:24)

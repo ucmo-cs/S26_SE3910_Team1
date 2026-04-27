@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Building2, Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
+import { Moon, Sun, ArrowLeft, ArrowRight } from "lucide-react";
+import commerceIcon from "@/assets/commerce-bank-icon.png";
 import { Button } from "./components/ui/button";
 import { StepIndicator } from "./components/StepIndicator";
 import { BranchSelector } from "./components/BranchSelector";
@@ -250,19 +251,21 @@ export default function App() {
   const displayTime = lastBooking?.time ?? "";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      <header className="bg-white dark:bg-gray-900 border-b border-green-200 dark:border-green-800 shadow-sm">
+    <div className="min-h-screen bg-[#FAF6E9] dark:bg-[#37644B] transition-colors duration-300">
+      <header className="bg-neutral-900 border-b border-neutral-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                <Building2 className="size-6 text-green-600 dark:text-green-400" />
-              </div>
+              <img
+                src={commerceIcon}
+                alt="Commerce Bank"
+                className="size-12 object-contain"
+              />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-2xl font-bold text-white">
                   Bank Appointments
                 </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-neutral-300">
                   Schedule your visit with us
                 </p>
               </div>
@@ -272,19 +275,19 @@ export default function App() {
               variant="outline"
               size="icon"
               onClick={toggleTheme}
-              className="border-green-200 dark:border-green-800 hover:bg-green-50 dark:hover:bg-green-900/30"
+              className="border-white/20 bg-transparent hover:bg-white/10"
             >
               {theme === "light" ? (
-                <Moon className="size-5 text-green-600" />
+                <Moon className="size-5 text-white" />
               ) : (
-                <Sun className="size-5 text-green-400" />
+                <Sun className="size-5 text-white" />
               )}
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {currentStep < 5 && <StepIndicator steps={steps} currentStep={currentStep} />}
 
         {catalogError && currentStep === 1 && (
@@ -374,32 +377,35 @@ export default function App() {
           )}
         </div>
 
-        <div className="flex items-center justify-between pt-6 border-t border-green-200 dark:border-green-800">
+        <div className="flex items-center justify-between pt-6 border-t border-[#37644B]/30 dark:border-green-800">
           {currentStep === 5 ? (
             <div className="w-full flex justify-center">
               <Button
                 onClick={handleNewAppointment}
-                className="bg-green-600 hover:bg-green-700 text-white"
+                className="bg-[#37644B] hover:bg-[#2C503C] text-white"
               >
                 Book Another Appointment
               </Button>
             </div>
           ) : (
             <>
+            {currentStep === 1 ? (
+              <div aria-hidden="true" />
+            ) : (
               <Button
                 variant="outline"
                 onClick={handleBack}
-                disabled={currentStep === 1}
-                className="border-green-200 dark:border-green-800"
+                className="border-[#37644B]/30 dark:border-green-800"
               >
                 <ArrowLeft className="size-4 mr-2" />
                 Back
               </Button>
+            )}
 
               <Button
                 onClick={() => void handleNext()}
                 disabled={!canProceed() || bookingSubmitting}
-                className="bg-green-600 hover:bg-green-700 text-white disabled:bg-gray-300 dark:disabled:bg-gray-700"
+                className="bg-[#37644B] hover:bg-[#2C503C] text-white disabled:bg-gray-300 dark:disabled:bg-gray-700"
               >
                 {bookingSubmitting
                   ? "Submitting…"

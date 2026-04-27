@@ -7,3 +7,45 @@
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
+10:43:48 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:43:53 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:44:43 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:44:43 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:45:58 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:46:06 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:47:05 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:47:43 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:54:58 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+10:55:02 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:28:20 PM [vite] (client) page reload src/assets/Commerce Bank Icon.png
+11:28:43 PM [vite] (client) page reload src/assets/commerce-bank-icon.png
+11:29:48 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:34:57 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:37:49 PM [vite] (client) hmr update /src/styles/index.css
+11:37:52 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:39:39 PM [vite] (client) hmr update /src/app/components/ServiceSelector.tsx, /src/styles/index.css
+11:40:39 PM [vite] (client) hmr update /src/app/components/StepIndicator.tsx, /src/styles/index.css
+11:40:44 PM [vite] (client) hmr update /src/app/components/StepIndicator.tsx, /src/styles/index.css
+11:40:48 PM [vite] (client) hmr update /src/app/components/StepIndicator.tsx, /src/styles/index.css
+11:43:55 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:48:36 PM [vite] (client) hmr update /src/app/App.tsx, /src/styles/index.css
+11:48:47 PM [vite] (client) hmr update /src/app/components/ServiceSelector.tsx, /src/styles/index.css
+11:50:53 PM [vite] (client) hmr update /src/app/components/BranchSelector.tsx, /src/styles/index.css
+11:50:56 PM [vite] (client) hmr update /src/app/components/BranchSelector.tsx, /src/styles/index.css
+11:51:02 PM [vite] (client) hmr update /src/app/components/DateTimeSelector.tsx, /src/styles/index.css
+11:51:05 PM [vite] (client) hmr update /src/app/components/DateTimeSelector.tsx, /src/styles/index.css
+11:51:09 PM [vite] (client) hmr update /src/app/components/DateTimeSelector.tsx, /src/styles/index.css
+11:51:15 PM [vite] (client) hmr update /src/app/components/CustomerInfoForm.tsx, /src/styles/index.css
+11:51:19 PM [vite] (client) hmr update /src/app/components/CustomerInfoForm.tsx, /src/styles/index.css
+11:51:24 PM [vite] (client) hmr update /src/app/components/CustomerInfoForm.tsx, /src/styles/index.css
+11:51:29 PM [vite] (client) hmr update /src/app/components/ConfirmationStep.tsx, /src/styles/index.css
+11:51:33 PM [vite] (client) hmr update /src/app/components/ConfirmationStep.tsx, /src/styles/index.css
+11:51:37 PM [vite] (client) hmr update /src/app/components/ConfirmationStep.tsx, /src/styles/index.css
+11:51:41 PM [vite] (client) hmr update /src/app/components/ConfirmationStep.tsx, /src/styles/index.css
+11:51:49 PM [vite] (client) page reload src/app/components/AppointmentCard.tsx
+11:51:52 PM [vite] (client) page reload src/app/components/AppointmentCard.tsx
+11:51:55 PM [vite] (client) page reload src/app/components/AppointmentCard.tsx
+11:52:01 PM [vite] (client) page reload src/app/components/AddAppointmentDialog.tsx
+11:52:05 PM [vite] (client) page reload src/app/components/AddAppointmentDialog.tsx
+11:52:11 PM [vite] (client) page reload src/app/components/AddAppointmentDialog.tsx
+11:52:14 PM [vite] (client) page reload src/app/components/AddAppointmentDialog.tsx

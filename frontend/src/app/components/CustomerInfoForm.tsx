@@ -34,7 +34,7 @@ export function CustomerInfoForm({
         </p>
       </div>
 
-      <Card className="p-6 border-green-200 dark:border-green-800">
+      <Card className="p-6 border-[#37644B]/30 dark:border-green-800">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="firstName" className="text-gray-900 dark:text-white">
@@ -46,7 +46,7 @@ export function CustomerInfoForm({
               onChange={(e) => handleChange("firstName", e.target.value)}
               placeholder="John"
               required
-              className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+              className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
             />
           </div>
 
@@ -60,7 +60,7 @@ export function CustomerInfoForm({
               onChange={(e) => handleChange("lastName", e.target.value)}
               placeholder="Doe"
               required
-              className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+              className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
             />
           </div>
 
@@ -75,7 +75,7 @@ export function CustomerInfoForm({
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="john.doe@example.com"
               required
-              className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+              className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
             />
           </div>
 
@@ -90,7 +90,7 @@ export function CustomerInfoForm({
               onChange={(e) => handleChange("phone", e.target.value)}
               placeholder="(555) 123-4567"
               required
-              className="border-green-200 dark:border-green-800 focus:border-green-600 dark:focus:border-green-400"
+              className="border-[#37644B]/30 dark:border-green-800 focus:border-[#37644B] dark:focus:border-green-400"
             />
           </div>
 
@@ -104,7 +104,7 @@ export function CustomerInfoForm({
               onChange={(e) => handleChange("notes", e.target.value)}
               placeholder="Any specific requests or information we should know..."
               rows={4}
-              className="w-full px-3 py-2 rounded-md border border-green-200 dark:border-green-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:border-green-600 dark:focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-green-600/20 dark:focus:ring-green-400/20"
+              className="w-full px-3 py-2 rounded-md border border-[#37644B]/30 dark:border-green-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:border-[#37644B] dark:focus:border-green-400 focus:outline-none focus:ring-2 focus:ring-[#37644B]/20 dark:focus:ring-green-400/20"
             />
           </div>
         </div>
